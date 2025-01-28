@@ -1,6 +1,8 @@
-﻿using Kreata.Backend.Repos;
+﻿using Kreata.Backend.Controllers.Base;
+using Kreata.Backend.Repos;
 using Kreta.Shared.Dtos;
 using Kreta.Shared.Extensions;
+using Kreta.Shared.Models;
 using Kreta.Shared.Responses;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,24 +10,20 @@ namespace Kreata.Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class StudentController2 : ControllerBase
+    public partial class StudentController : BaseController<Student, StudentDto>
     {
-        private IStudentRepo _studentRepo;
-
-        public StudentController2(IStudentRepo? studentRepo)
-        {
-            _studentRepo = studentRepo ?? throw new ArgumentNullException($"{studentRepo}") ;
-        }
-
-        [HttpGet("{id}")]
+        
+        
+        [HttpGet("byid/{id}")]
         public async Task<IActionResult> GetStudentByIdAsync(Guid id)
         {
+            //same as the generic in Studentcontroller, renamed in the HttpGet to resolve conflict
             var student = (await _studentRepo.FindByConditionAsync(s => s.Id == id)).FirstOrDefault();
             if (student != null)
                 return Ok(student.ToStudentDto());
             return NotFound();
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> GetAllStudentAsync()
         {
