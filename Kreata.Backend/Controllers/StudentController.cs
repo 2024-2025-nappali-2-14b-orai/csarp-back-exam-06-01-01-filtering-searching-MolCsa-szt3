@@ -26,6 +26,16 @@ namespace Kreata.Backend.Controllers
         {
             return Ok(await _studentRepo.GetStudentCountAsync());
         }
+        [HttpGet("FemaleCount")]
+        public async Task<IActionResult> GetFemaleStudentCountAsync()
+        {
+            return Ok(await _studentRepo.GetFemaleStudentCountAsync());
+        }
+        [HttpGet("MaleCount")]
+        public async Task<IActionResult> GetMaleStudentCountAsync()
+        {
+            return Ok(await _studentRepo.GetMaleStudentCountAsync());
+        }
     }
     
 }
